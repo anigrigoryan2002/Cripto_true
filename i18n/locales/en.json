@@ -1,0 +1,20 @@
+{
+  "home": "Home",
+  "about_us": "About us",
+  "contacts": "Contacts",
+  "login": "LOGIN",
+  "join": "JOIN to",
+  "contact": "Connect with us",
+  "reserved": "© 2024 All Rights Reserved",
+  "placeholder": "Subscribe to news (Enter your email)",
+  "subscribe": "Subscribe",
+  "more": "More posts",
+  "leftTitle": "News from thematic telegram channels",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "mnemonic": "Mnemonics",
+  "username": "Username",
+  "dontHaveAccount": "Don't have an account?",
+  "haveAccount": "Do you have an account?",
+  "register": "Register!"
+}
