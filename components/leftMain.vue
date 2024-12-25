@@ -3,10 +3,7 @@
     <div class="cards-container">
       <div v-for="(item, index) in data" :key="index" class="card">
         <div class="card-image-info-wrapper">
-          <NuxtImg
-            :src="`${LeftSideUrl}${item.image}`"
-            class="anons-img"
-          />
+          <NuxtImg :src="`${LeftSideUrl}${item.image}`" class="anons-img" />
           <div class="post-info-panel">
             <div class="column">
               <div class="date-container subtitle">
@@ -108,7 +105,7 @@ const handleClick = async () => {
   }
 };
 
-const LeftSideUrl = useRuntimeConfig().public.apiBaseURLImg+ 'uploads/posts/';
+const LeftSideUrl = useRuntimeConfig().public.apiBaseURLImg + "uploads/posts/";
 </script>
 
 <style scoped>
@@ -307,7 +304,6 @@ const LeftSideUrl = useRuntimeConfig().public.apiBaseURLImg+ 'uploads/posts/';
   padding: 20px;
   width: 100%;
   cursor: pointer;
-
 }
 body {
   margin: 0 !important;

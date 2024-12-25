@@ -71,23 +71,21 @@
                 </div>
               </div>
               <button @click="toggleTheme">
-                <img
-                  :src="
-                    isDarkTheme
-                      ? '/_nuxt/assets/images/theme-dark.svg'
-                      : '/_nuxt/assets/images/theme-light.svg'
-                  "
+                <NuxtImg
+                  :src="isDarkTheme ? '/theme-dark.svg' : '/theme-light.svg'"
                   alt="Theme Toggle Icon"
+                  class="darkImg"
                 />
               </button>
               <div class="language" @click="isDropdownOpen = !isDropdownOpen">
                 <div class="flag_drop">
-                  <img
+                  <NuxtImg
+                    class="flag"
                     :src="selectedLanguage.flag"
                     :alt="selectedLanguage.name + ' Flag'"
                   />
-                  <img
-                    src="/assets/images/arrow.svg"
+                  <NuxtImg
+                    src="/arrow.svg"
                     alt="Dropdown Arrow"
                     class="arrow"
                     :class="{ rotated: isDropdownOpen }"
@@ -100,7 +98,11 @@
                     :key="language.code"
                     @click.stop="selectLanguage(language)"
                   >
-                    <img :src="language.flag" :alt="language.name + ' Flag'" />
+                    <NuxtImg
+                      :src="language.flag"
+                      class="nuxtImages"
+                      :alt="language.name + ' Flag'"
+                    />
                     {{ language.name }}
                   </div>
                 </div>
@@ -120,11 +122,9 @@
             <form class="lofinForm">
               <div class="cont">
                 <button class="modal-close" @click="close = false">
-                  <img
+                  <NuxtImg
                     :src="
-                      isDarkTheme
-                        ? '/_nuxt/assets/images/closeDslCkta.png'
-                        : '/_nuxt/assets/images/close-black.png'
+                      isDarkTheme ? '/closeDslCkta.png' : '/close-black.png'
                     "
                     alt="close login icon"
                     class="icon-switch-black"
@@ -163,13 +163,13 @@
             <div class="input_container" @change="calculate1">
               <input type="text" v-model="input1Text" />
               <div class="select_container" @click="optionValue = !optionValue">
-                <img
+                <NuxtImg
                   :src="selectedCurrency.img"
                   :alt="selectedCurrency.name"
                   class="currency-icon"
                 />
-                <img
-                  src="/assets/images/arrow.svg"
+                <NuxtImg
+                  src="/arrow.svg"
                   alt=""
                   class="arrow-icon"
                   :class="{ rotated: optionValue }"
@@ -182,7 +182,11 @@
                   class="option_item"
                   @click="selectCurrency(currency)"
                 >
-                  <img :src="currency.img" :alt="currency.name" />
+                  <NuxtImg
+                    :src="currency.img"
+                    :alt="currency.name"
+                    class="option_item_img"
+                  />
                   <span class="name">{{ currency.name }}</span>
                   <span class="currensy_symboll_1">{{ currency.symbol }}</span>
                 </div>
@@ -196,8 +200,8 @@
                 @click="openOptionList = !openOptionList"
               >
                 {{ selectedCurrency1 }}
-                <img
-                  src="/assets/images/arrow.svg"
+                <NuxtImg
+                  src="/arrow.svg"
                   alt=""
                   class="arrow-icon2"
                   :class="{ rotated: openOptionList }"
@@ -222,7 +226,11 @@
             class="currensy_list_item"
           >
             <div class="currency_info">
-              <img :src="currency.img" :alt="currency.name" />
+              <NuxtImg
+                :src="currency.img"
+                :alt="currency.name"
+                class="currImg"
+              />
               <div class="currensy_name_container">
                 <span>{{ currency.name }}</span>
                 <span class="currensy_symboll_1">{{ currency.symbol }}</span>
@@ -242,9 +250,8 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useApi } from "~/stores/Api";
 
-
-import { watch } from 'vue';
-import { useHead } from '#app';
+import { watch } from "vue";
+import { useHead } from "#app";
 
 function setCookie(name, value, days) {
   const expires = new Date();
@@ -278,8 +285,8 @@ const isRegistering = ref(false);
 const isDropdownOpen = ref(false);
 
 const languages = ref([
-  { code: "en", name: "English", flag: "/_nuxt/assets/images/us.svg" },
-  { code: "ru", name: "Russia", flag: "/_nuxt/assets/images/ru.svg" },
+  { code: "en", name: "English", flag: "/us.svg" },
+  { code: "ru", name: "Russia", flag: "/ru.svg" },
 ]);
 const selectedLanguage = ref(languages.value[0]);
 
@@ -321,31 +328,31 @@ onMounted(async () => {
       {
         name: "Bitcoin",
         symbol: "BTC",
-        img: "/_nuxt/assets/images/bitcoinLogo.webp",
+        img: "/bitcoinLogo.webp",
         num: responseData.bitcoin?.usd,
       },
       {
         name: "Monero",
         symbol: "XMR",
-        img: "/_nuxt/assets/images/monero.webp",
+        img: "/monero.webp",
         num: responseData.monero?.usd,
       },
       {
         name: "Litecoin",
         symbol: "LTC",
-        img: "/_nuxt/assets/images/litecoin.webp",
+        img: "/litecoin.webp",
         num: responseData.lightcoin?.usd || "N/A",
       },
       {
         name: "Ethereum",
         symbol: "ETH",
-        img: "/_nuxt/assets/images/ethereum.webp",
+        img: "/ethereum.webp",
         num: responseData.ethereum?.usd,
       },
       {
         name: "Tron",
         symbol: "TRX",
-        img: "/_nuxt/assets/images/tron.webp",
+        img: "/tron.webp",
         num: responseData.tron?.usd,
       },
     ];
@@ -400,7 +407,7 @@ const currencies = ref([]);
 const selectedCurrency = ref({
   name: "Bitcoin",
   symbol: "BTC",
-  img: "/_nuxt/assets/images/bitcoinLogo.webp",
+  img: "/bitcoinLogo.webp",
 });
 const input1Text = ref();
 const input2Text = ref();
@@ -453,21 +460,36 @@ const selectCurrency1 = (symbol) => {
   calculate2();
 };
 
-watch(() => locale.value, () => {
-  const metaDescription = locale.value === 'en' ? data.meta_description_en : data.meta_description_ru;
-  const metaKeywords = locale.value === 'en' ? data.meta_keywords_en : data.meta_keywords_ru;
+watch(
+  () => locale.value,
+  () => {
+    const metaDescription =
+      locale.value === "en"
+        ? data.meta_description_en
+        : data.meta_description_ru;
+    const metaKeywords =
+      locale.value === "en" ? data.meta_keywords_en : data.meta_keywords_ru;
 
-  useHead({
-    title: 'Criptoinfo',
-    meta: [
-      { name: 'description', content: metaDescription },
-      { name: 'keywords', content: metaKeywords }
-    ]
-  });
-}, { immediate: true });
+    useHead({
+      title: "Criptoinfo",
+      meta: [
+        { name: "description", content: metaDescription },
+        { name: "keywords", content: metaKeywords },
+      ],
+    });
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
+.currImg {
+  width: 35px;
+}
+
+.darkImg {
+  width: 25px;
+}
 .light .modal__footer,
 .light .modal__footer > button,
 .light .modal__footer > p {
@@ -571,8 +593,7 @@ p {
   padding: 0;
   width: 100%;
 }
-.option_item img {
-  height: 30px;
+.option_item_img {
   width: 30px;
 }
 .name {
@@ -680,8 +701,10 @@ img {
   max-width: 100%;
 }
 .currency-icon {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+}
+.flag {
+  width: 25px;
 }
 
 .arrow-icon {
@@ -779,9 +802,8 @@ img {
   background-color: #ffffff1a;
 }
 
-.language-option img {
-  width: 20px;
-  height: 20px;
+.nuxtImages {
+  width: 25px;
   margin-right: 10px;
 }
 .arrow {
