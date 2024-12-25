@@ -240,7 +240,11 @@
 import { ref } from "vue";
 
 import { useI18n } from "vue-i18n";
-import { useMyApi } from "~/stores/MyApi";
+import { useApi } from "~/stores/Api";
+
+
+import { watch } from 'vue';
+import { useHead } from '#app';
 
 function setCookie(name, value, days) {
   const expires = new Date();
@@ -264,11 +268,10 @@ function getCookie(name) {
 }
 const { t, locale } = useI18n();
 
-const myStore = useMyApi();
+const myStore = useApi();
 await myStore.fetchData();
 const data = myStore.myData.setting;
 const logoImgPath = data.logo;
-console.log(data);
 
 const close = ref(false);
 const isRegistering = ref(false);
@@ -293,15 +296,13 @@ onMounted(async () => {
   loadLocale();
   loading.value = true;
   try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,monero,ethereum,tron,lightcoin,tether&vs_currencies=usd,rub",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const config = useRuntimeConfig();
+    const response = await fetch(config.public.coingeckoApiURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch settings: ${response.statusText}`);
@@ -451,6 +452,19 @@ const selectCurrency1 = (symbol) => {
   openOptionList.value = false;
   calculate2();
 };
+
+watch(() => locale.value, () => {
+  const metaDescription = locale.value === 'en' ? data.meta_description_en : data.meta_description_ru;
+  const metaKeywords = locale.value === 'en' ? data.meta_keywords_en : data.meta_keywords_ru;
+
+  useHead({
+    title: 'Criptoinfo',
+    meta: [
+      { name: 'description', content: metaDescription },
+      { name: 'keywords', content: metaKeywords }
+    ]
+  });
+}, { immediate: true });
 </script>
 
 <style scoped>
@@ -879,6 +893,7 @@ li {
   font-family: Golos Text, sans-serif;
 }
 button {
+  cursor: pointer;
   background: none;
   border: none;
   outline: none;
@@ -1004,6 +1019,7 @@ button {
   color: #d0d0d0;
 }
 .modal__footer button {
+  cursor: pointer;
   font-weight: 900;
 }
 .modal-close {
@@ -1028,5 +1044,8 @@ button {
   background: #1a1825;
   border-radius: 30px;
   box-shadow: 0 0 35px #00000026;
+}
+.first_section {
+  cursor: pointer;
 }
 </style>

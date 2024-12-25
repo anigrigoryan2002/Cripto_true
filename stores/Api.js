@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useMyApi = defineStore("myApi", {
+export const useApi = defineStore("Api", {
   state: () => ({
     myData: null,
     myData1: null,

@@ -4,7 +4,7 @@
       <div v-for="(item, index) in data" :key="index" class="card">
         <div class="card-image-info-wrapper">
           <NuxtImg
-            :src="'https://api.cryptoinfo.me/uploads/posts/' + item.image"
+            :src="`${LeftSideUrl}${item.image}`"
             class="anons-img"
           />
           <div class="post-info-panel">
@@ -73,11 +73,11 @@
 
 <script setup>
 import { useI18n } from "vue-i18n";
-import { useMyApi } from "~/stores/MyApi";
+import { useApi } from "~/stores/Api";
 
 const { t, locale } = useI18n();
 
-const myStore = useMyApi();
+const myStore = useApi();
 await myStore.fetchData1();
 const data = ref([]);
 const state = ref(10);
@@ -107,6 +107,8 @@ const handleClick = async () => {
     console.error("Error fetching data:", error);
   }
 };
+
+const LeftSideUrl = useRuntimeConfig().public.apiBaseURLImg+ 'uploads/posts/';
 </script>
 
 <style scoped>
@@ -304,10 +306,11 @@ const handleClick = async () => {
   overflow: hidden;
   padding: 20px;
   width: 100%;
+  cursor: pointer;
+
 }
 body {
   margin: 0 !important;
   font-family: Golos Text, sans-serif;
-
 }
 </style>

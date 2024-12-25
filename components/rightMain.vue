@@ -10,7 +10,7 @@
           <div class="company-logo-wrapper">
             <a href="#" class="share-link">
               <NuxtImg
-                :src="'https://api.cryptoinfo.me/' + cards.image"
+                :src="`${RightSideUrl}${cards.image}`"
                 class="anons_img"
               ></NuxtImg>
             </a>
@@ -50,12 +50,11 @@
 <script setup>
 import { useI18n } from "vue-i18n";
 
-import { useMyApi } from "~/stores/MyApi";
+import { useApi } from "~/stores/Api";
 const { t, locale } = useI18n();
 
-const myStore = useMyApi();
+const myStore = useApi();
 
-// const data = myStore.myData2.posts;
 const data = ref([]);
 const state2 = ref(10);
 
@@ -84,17 +83,12 @@ const handleClick = async () => {
     console.error("Error fetching data:", error);
   }
 };
+const RightSideUrl = useRuntimeConfig().public.apiBaseURLImg;
+
 </script>
 
 <style scoped>
-/* .views-container .eye-icon {
-    background-image: url('/_nuxt/assets/images/eye-icon-black.jpg');
 
-}
-
-.light .views-container .eye-icon {
-    background-image: url('/_nuxt/assets/images/eye-icon.jpg');
-} */
 .light .card-text-content {
   color: #9e9e9e;
 }

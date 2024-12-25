@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <myHeader />
+  <div class="main">
+    <headerPage />
     <div class="card-section">
       <div class="cards-section-container">
-        <myMain />
-        <myMain2 />
+        <leftMain />
+        <rightMain />
       </div>
     </div>
-
-    <myFooter />
+    <footerPage />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+
+</script>
 
 <style scoped>
 @media screen and (max-width: 1300px) {
@@ -20,8 +21,8 @@
     flex-direction: column !important;
   }
 }
-body {
-  margin: 0 !important;
+.main {
+  margin: -8 !important;
   padding: 0 !important;
   font-family: Golos Text, sans-serif;
 }
